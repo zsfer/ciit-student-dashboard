@@ -37,7 +37,6 @@ type MentalCheckAppointment = {
 
 export const OpenCarehub = () => {
   const { setValue, watch } = useForm<CarehubResponseForm>();
-  const [discomforts, setDiscomforts] = React.useState<string>(null!);
 
   return (
     <Dialog>
@@ -47,8 +46,8 @@ export const OpenCarehub = () => {
           <BellPlusIcon />
         </Button>
       </DialogTrigger>
-      <DialogContent className="p-0 border-none">
-        <DialogHeader className="p-5 bg-center bg-[url('/bg-carehub.png')] rounded-t-lg text-white">
+      <DialogContent className="p-0 border-none rounded-lg">
+        <DialogHeader className="p-5 bg-center bg-[url('/bg-carehub.png')] rounded-t-lg text-white text-left">
           <Image src={CarehubLogo} alt="Carehub" className="w-1/4" />
           <h1 className="text-3xl font-bold">Carehub</h1>
           <p>Don&apos;t be afraid to speak up, we&apos;re here for you!</p>
@@ -65,11 +64,9 @@ export const OpenCarehub = () => {
                 onClick={() => {
                   setValue("healthCheck", v);
                 }}
-                className={
-                  v == watch("healthCheck")
-                    ? "bg-primary/40 border-primary"
-                    : ""
-                }
+                className={cn(
+                  v == watch("healthCheck") && "bg-primary/40 border-primary",
+                )}
               >
                 {v}
               </Button>
@@ -91,9 +88,8 @@ export const OpenCarehub = () => {
                   setValue("mentalHealthCheck", i + 1);
                 }}
                 className={cn(
-                  i + 1 == watch("mentalHealthCheck")
-                    ? "bg-primary/40 border-primary"
-                    : "",
+                  i + 1 == watch("mentalHealthCheck") &&
+                    "bg-primary/40 border-primary",
                   "h-28",
                 )}
               >

@@ -1,14 +1,21 @@
 "use client";
 import React from "react";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sidebar";
+import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import { BellIcon, ChevronDown, SearchIcon } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import Image from "next/image";
+
+import CIITLogo from "/public/ciit-logo.png";
+import { SplashScreen } from "@/components/splash-screen";
+import { MobileNav } from "@/components/sidebar/mobile-nav";
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const isMobile = useIsMobile();
 
-  if (isMobile) return <MobileLayout>{children}</MobileLayout>;
+  if (!isMobile) return <SplashScreen />;
+
+  if (!!isMobile) return <MobileLayout>{children}</MobileLayout>;
 
   return (
     <SidebarProvider>
@@ -45,7 +52,18 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
 const MobileLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="w-full">
-      <main className="px-5 py-3">{children}</main>
+      <main className="px-5 py-8 space-y-8">
+        <header className="flex flex-row justify-between w-full items-center">
+          <Image src={CIITLogo} alt="CIIT" className="w-1/3" />
+          <div className="flex flex-row gap-5 items-center">
+            <SearchIcon />
+            <BellIcon />
+          </div>
+        </header>
+        {children}
+      </main>
+
+      <MobileNav />
     </div>
   );
 };

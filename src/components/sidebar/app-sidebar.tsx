@@ -8,12 +8,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { BrainCog, LayoutDashboardIcon } from "lucide-react";
-
-const general = [
-  { title: "Dashboard", url: "/", icon: LayoutDashboardIcon },
-  { title: "Carehub", url: "/carehub", icon: BrainCog },
-];
+import { generalRoutes } from "./routes";
 
 export const AppSidebar = () => {
   return (
@@ -23,7 +18,7 @@ export const AppSidebar = () => {
           <SidebarGroupLabel>General</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {general.map((item) => (
+              {generalRoutes.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <a href={item.url}>
