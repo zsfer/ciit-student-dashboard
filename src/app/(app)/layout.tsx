@@ -1,19 +1,23 @@
 "use client";
 import React from "react";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import {
+  SidebarProvider,
+  SidebarTrigger,
+  useSidebar,
+} from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
-import { BellIcon, ChevronDown, SearchIcon } from "lucide-react";
+import { BellIcon, SearchIcon } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import Image from "next/image";
-
 import CIITLogo from "/public/ciit-logo.png";
 import { SplashScreen } from "@/components/splash-screen";
 import { MobileNav } from "@/components/sidebar/mobile-nav";
+import { cn } from "@/lib/utils";
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const isMobile = useIsMobile();
 
-  if (!isMobile) return <SplashScreen />;
+  if (isMobile === undefined) return <SplashScreen />;
 
   if (!!isMobile) return <MobileLayout>{children}</MobileLayout>;
 
@@ -21,26 +25,19 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
     <SidebarProvider>
       <AppSidebar />
       <div className="w-full">
-        <header className="items-center border-b px-5 py-3 flex flex-row justify-between">
+        <header className="relative items-center border-b px-5 py-3 flex flex-row justify-between">
+          <ToggleSidebar />
           <div className="flex-1 flex flex-col gap-2">
             <h1 className="font-bold text-xl">Welcome back, Student! 👋</h1>
             <p className="text-sm text-gray-500">Term 1, Week 13</p>
           </div>
 
-          <div className="flex flex-row gap-5">
-            <div className="flex flex-row gap-5 items-center">
-              <SearchIcon />
-              <BellIcon />
+          <div className="flex flex-row gap-5 ">
+            <div className="flex flex-row gap-5 items-center ">
+              <SearchIcon size={20} />
+              <BellIcon size={20} />
             </div>
-            <div className="flex flex-row items-center gap-2 ">
-              <div className="bg-blue-300 w-8 h-8 rounded-full"></div>
-              <div className="flex flex-col pr-9">
-                <div className="font-bold">CIITzen Name</div>
-                <div className="text-gray-500 text-sm">BSEMC</div>
-              </div>
-
-              <ChevronDown className="text-gray-500" />
-            </div>
+            <div className="bg-blue-300 w-6 h-6 rounded-full"></div>
           </div>
         </header>
         <main className="px-5 py-3">{children}</main>
@@ -64,6 +61,21 @@ const MobileLayout = ({ children }: { children: React.ReactNode }) => {
       </main>
 
       <MobileNav />
+    </div>
+  );
+};
+
+const ToggleSidebar = () => {
+  const { open } = useSidebar();
+
+  return (
+    <div
+      className={cn(
+        "absolute -bottom-4 z-10 rounded-full bg-white border",
+        open ? "-left-4" : "left-0",
+      )}
+    >
+      <SidebarTrigger />
     </div>
   );
 };
