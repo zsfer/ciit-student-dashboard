@@ -28,7 +28,7 @@ export const CarehubCTA = () => {
   }, [getItemQuery]);
 
   return (
-    <div className="rounded-xl bg-cover bg-center px-5 py-7 bg-[url('/bg-carehub.png')] text-white gap-5 flex flex-col">
+    <div className="rounded-xl bg-cover bg-center px-5 py-7 bg-[url('/bg-carehub.png')] text-white gap-5 flex flex-col w-full lg:w-fit">
       <Image src={CarehubLogo} alt="Carehub" className="w-1/3" />
 
       <div className="gap-1">

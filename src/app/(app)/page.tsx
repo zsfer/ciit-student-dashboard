@@ -15,7 +15,7 @@ const HomePage = () => {
       )}
 
       <div className="flex flex-row">
-        <div className="">
+        <div className="w-full">
           <CarehubCTA />
         </div>
       </div>
