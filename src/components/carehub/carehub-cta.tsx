@@ -6,6 +6,11 @@ import CarehubLogo from "/public/carehub-logo.png";
 import { OpenCarehub } from "./carehub-form";
 import { isValidCarehubRecord } from "@/lib/utils";
 import { useCarehubData } from "@/hooks/use-carehub";
+import dayjs from "dayjs";
+import { CarehubRecord } from "@/lib/types";
+import Link from "next/link";
+import { Button } from "../ui/button";
+import { ArrowRight } from "lucide-react";
 
 export const CarehubCTA = () => {
   const { records } = useCarehubData();
@@ -15,7 +20,7 @@ export const CarehubCTA = () => {
       <Image src={CarehubLogo} alt="Carehub" className="w-1/3" />
       <div className="gap-1">
         {records && isValidCarehubRecord(records[0]) ? (
-          <DidCarehubToday />
+          <DidCarehubToday record={records[0]} />
         ) : (
           <NeedCarehub />
         )}
@@ -24,8 +29,23 @@ export const CarehubCTA = () => {
   );
 };
 
-const DidCarehubToday = () => {
-  return <>nedcar</>;
+const DidCarehubToday = ({ record }: { record: CarehubRecord }) => {
+  return (
+    <>
+      <h2>You&apos;re all good to go!</h2>
+      <div className="text-sm mb-3">
+        Cleared at:{" "}
+        {dayjs(record["Date Recorded"]).format("MMM DD, YYYY, HH:mm a")}
+      </div>
+
+      <Link href="/carehub" className="flex-1">
+        <Button variant="outline">
+          View previous entries
+          <ArrowRight />
+        </Button>
+      </Link>
+    </>
+  );
 };
 
 const NeedCarehub = () => {

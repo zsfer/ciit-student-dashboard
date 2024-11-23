@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -21,17 +21,22 @@ import {
 import { submitCarehub } from "@/lib/carehub";
 
 export const OpenCarehub = () => {
-  const { setValue, watch, handleSubmit } = useForm<CarehubResponseForm>();
+  const [open, setOpen] = useState(false);
+  const {
+    setValue,
+    watch,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<CarehubResponseForm>();
 
   const submitForm: SubmitHandler<CarehubResponseForm> = async (data) => {
     const { records } = await submitCarehub(data);
 
-    console.log("[carehub]: Successfully submitted record:");
-    console.log(records);
+    if (records) setOpen(false);
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className="w-full">
           Open Carehub
@@ -60,8 +65,9 @@ export const OpenCarehub = () => {
                   setValue("healthCheck", v as HealthCheckResponse);
                 }}
                 className={cn(
+                  "text-black border-gray-300",
                   v == watch("healthCheck") &&
-                    "bg-primary/40 border-primary hover:bg-primary/20",
+                    "bg-primary/40 border-primary hover:bg-primary/20 hover:text-primary",
                 )}
               >
                 {v}
@@ -84,8 +90,9 @@ export const OpenCarehub = () => {
                   setValue("mentalHealthCheck", v[1] as MentalCheckResponse);
                 }}
                 className={cn(
+                  "text-black border-gray-300",
                   v[1] == watch("mentalHealthCheck") &&
-                    "bg-primary/40 border-primary hover:bg-primary/20",
+                    "bg-primary/40 border-primary hover:bg-primary/20 hover:text-primary",
                   "h-28",
                 )}
               >
@@ -96,7 +103,9 @@ export const OpenCarehub = () => {
               </Button>
             ))}
           </div>
-          <Button type="submit">Submit</Button>
+          <Button type="submit" disabled={isSubmitting}>
+            Submit
+          </Button>
         </form>
       </DialogContent>
     </Dialog>

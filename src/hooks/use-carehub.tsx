@@ -37,6 +37,7 @@ export const useCarehubData = () => {
               "[carehub]: local data mismatch, syncing with latest carehub data",
             );
 
+            db.clear("carehub");
             const tx = db.transaction("carehub", "readwrite");
 
             for (const record of onlineData) {
