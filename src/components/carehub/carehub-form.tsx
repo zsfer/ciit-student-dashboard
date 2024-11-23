@@ -6,37 +6,29 @@ import {
   DialogTrigger,
   DialogContent,
   DialogHeader,
+  DialogTitle,
 } from "@/components/ui/dialog";
 import { BellPlusIcon } from "lucide-react";
 import CarehubLogo from "/public/carehub-logo.png";
 import Image from "next/image";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { cn } from "@/lib/utils";
-
-type CarehubResponseForm = {
-  healthCheck: string;
-  healthSymptoms?: HealthCheckSymptoms;
-  mentalHealthCheck: number;
-  mentalHelp?: MentalCheckHelp;
-};
-
-type HealthCheckSymptoms = {
-  symptoms: string[];
-  location: string;
-};
-
-type MentalCheckHelp = {
-  concerns?: string;
-  appointment: MentalCheckAppointment;
-};
-
-type MentalCheckAppointment = {
-  wantToSetAppointment: "Yes" | "No" | "AlreadyHaveSession";
-  reason: string;
-};
+import {
+  CarehubResponseForm,
+  HealthCheckResponse,
+  MentalCheckResponse,
+} from "@/lib/types";
+import { submitCarehub } from "@/lib/carehub";
 
 export const OpenCarehub = () => {
-  const { setValue, watch } = useForm<CarehubResponseForm>();
+  const { setValue, watch, handleSubmit } = useForm<CarehubResponseForm>();
+
+  const submitForm: SubmitHandler<CarehubResponseForm> = async (data) => {
+    const { records } = await submitCarehub(data);
+
+    console.log("[carehub]: Successfully submitted record:");
+    console.log(records);
+  };
 
   return (
     <Dialog>
@@ -49,11 +41,14 @@ export const OpenCarehub = () => {
       <DialogContent className="p-0 border-none rounded-lg">
         <DialogHeader className="p-5 bg-center bg-[url('/bg-carehub.png')] rounded-t-lg text-white text-left">
           <Image src={CarehubLogo} alt="Carehub" className="w-1/4" />
-          <h1 className="text-3xl font-bold">Carehub</h1>
+          <DialogTitle className="text-3xl font-bold">Carehub</DialogTitle>
           <p>Don&apos;t be afraid to speak up, we&apos;re here for you!</p>
         </DialogHeader>
 
-        <form className="px-5 pb-5 gap-3 flex-col flex">
+        <form
+          className="px-5 pb-5 gap-3 flex-col flex"
+          onSubmit={handleSubmit(submitForm)}
+        >
           Do you have any health issues or feel discomfort today?
           <div className="grid grid-cols-2 gap-2">
             {["I feel good 😀", "I don't feel well 🤧"].map((v) => (
@@ -62,10 +57,11 @@ export const OpenCarehub = () => {
                 key={v}
                 type="button"
                 onClick={() => {
-                  setValue("healthCheck", v);
+                  setValue("healthCheck", v as HealthCheckResponse);
                 }}
                 className={cn(
-                  v == watch("healthCheck") && "bg-primary/40 border-primary",
+                  v == watch("healthCheck") &&
+                    "bg-primary/40 border-primary hover:bg-primary/20",
                 )}
               >
                 {v}
@@ -85,11 +81,11 @@ export const OpenCarehub = () => {
                 key={"mental" + i}
                 type="button"
                 onClick={() => {
-                  setValue("mentalHealthCheck", i + 1);
+                  setValue("mentalHealthCheck", v[1] as MentalCheckResponse);
                 }}
                 className={cn(
-                  i + 1 == watch("mentalHealthCheck") &&
-                    "bg-primary/40 border-primary",
+                  v[1] == watch("mentalHealthCheck") &&
+                    "bg-primary/40 border-primary hover:bg-primary/20",
                   "h-28",
                 )}
               >
@@ -100,7 +96,7 @@ export const OpenCarehub = () => {
               </Button>
             ))}
           </div>
-          <Button>Submit</Button>
+          <Button type="submit">Submit</Button>
         </form>
       </DialogContent>
     </Dialog>
