@@ -5,6 +5,9 @@ import { useEffect, useState } from "react";
 
 export const useCarehubData = () => {
   const [records, setRecords] = useState<CarehubRecord[]>(null!);
+  const [localRecords, setLocalRecords] = useState<CarehubRecord[]>(null!);
+  const [onlineRecords, setOnlineRecords] = useState<CarehubRecord[]>(null!);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -14,6 +17,7 @@ export const useCarehubData = () => {
           await db.getAllFromIndex("carehub", "date")
         ).reverse();
         setRecords(localData.map((r) => r.fields));
+        setLocalRecords(localData.map((r) => r.fields));
 
         // check if online
         if (navigator.onLine) {
@@ -40,6 +44,7 @@ export const useCarehubData = () => {
             }
             await tx.done;
             setRecords(onlineData.map((r) => r.fields));
+            setOnlineRecords(onlineData.map((r) => r.fields));
           }
         }
       } catch (e) {
