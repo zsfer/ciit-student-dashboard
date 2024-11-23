@@ -8,16 +8,4 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const isValidCarehubRecord = (record?: CarehubRecord) =>
-  record && dayjs(record.dateRecorded).isSame(new Date(), "day");
-
-export const toAirtableSafeCarehub = (record: CarehubRecord) => {
-  return {
-    ID: record.id,
-    "Date Recorded": record.dateRecorded,
-    "Additional Info": record.additionalInfo,
-    Status: record.status,
-    "Health Check": record.healthCheck,
-    "Mental Health Check": record.mentalHealthCheck,
-    Student: record.student,
-  };
-};
+  record && dayjs(record["Date Recorded"]).isSame(new Date(), "day");
