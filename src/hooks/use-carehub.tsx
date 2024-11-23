@@ -55,5 +55,5 @@ export const useCarehubData = () => {
     fetchData();
   }, []);
 
-  return { records };
+  return { records, localRecords, onlineRecords };
 };
