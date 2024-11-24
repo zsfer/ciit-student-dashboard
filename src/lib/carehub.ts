@@ -18,6 +18,7 @@ export const saveCarehubOnline = async (
   };
 
   const response = await Airtable.pushSingle("Carehub", record);
-  revalidatePath(path, "layout");
+  revalidatePath("/", "layout");
+  revalidatePath(path);
   return response;
 };
