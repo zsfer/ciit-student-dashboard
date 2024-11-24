@@ -52,6 +52,14 @@ export type Announcement = {
   "Is Popup"?: boolean;
 };
 
+export type Schedule = {
+  Name: string;
+  Room: string;
+  Timeslot: Date;
+  "Canvas Link": string;
+  "Cover Image": ATAttachment[];
+};
+
 /// CORE STUFF
 export type AirtableResponse<T> = {
   records: {

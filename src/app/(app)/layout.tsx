@@ -18,30 +18,32 @@ import { queryClient } from "@/lib/query";
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const isMobile = useIsMobile();
 
-  if (!!isMobile) return <MobileLayout>{children}</MobileLayout>;
-
   return (
     <QueryClientProvider client={queryClient}>
       <SidebarProvider>
         <AppSidebar />
-        <div className="w-full">
-          <header className="relative items-center border-b px-5 py-3 flex flex-row justify-between">
-            <ToggleSidebar />
-            <div className="flex-1 flex flex-col gap-2">
-              <h1 className="font-bold text-xl">Welcome back, Student! 👋</h1>
-              <p className="text-sm text-gray-500">Term 1, Week 13</p>
-            </div>
-
-            <div className="flex flex-row gap-5 ">
-              <div className="flex flex-row gap-5 items-center ">
-                <SearchIcon size={20} />
-                <BellIcon size={20} />
+        {!!isMobile ? (
+          <MobileLayout>{children}</MobileLayout>
+        ) : (
+          <div className="w-full">
+            <header className="relative items-center border-b px-5 py-3 flex flex-row justify-between">
+              <ToggleSidebar />
+              <div className="flex-1 flex flex-col gap-2">
+                <h1 className="font-bold text-xl">Welcome back, Student! 👋</h1>
+                <p className="text-sm text-gray-500">Term 1, Week 13</p>
               </div>
-              <div className="bg-blue-300 w-6 h-6 rounded-full"></div>
-            </div>
-          </header>
-          <main className="px-5 py-3 space-y-3">{children}</main>
-        </div>
+
+              <div className="flex flex-row gap-5 ">
+                <div className="flex flex-row gap-5 items-center ">
+                  <SearchIcon size={20} />
+                  <BellIcon size={20} />
+                </div>
+                <div className="bg-blue-300 w-6 h-6 rounded-full"></div>
+              </div>
+            </header>
+            <main className="px-5 py-3 space-y-3">{children}</main>
+          </div>
+        )}
       </SidebarProvider>
     </QueryClientProvider>
   );
