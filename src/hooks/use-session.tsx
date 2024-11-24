@@ -1,15 +1,21 @@
+"use client";
 import { useEffect, useState } from "react";
 
 export const useSession = () => {
   const [session, setSession] = useState<string>(() => {
-    return localStorage.getItem("session") || "";
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("session") || "";
+    }
+    return "";
   });
 
   useEffect(() => {
-    if (!session) {
-      const newSessionId = crypto.randomUUID();
-      localStorage.setItem("session", newSessionId);
-      setSession(newSessionId);
+    if (typeof window !== "undefined") {
+      if (!session) {
+        const newSessionId = crypto.randomUUID();
+        localStorage.setItem("session", newSessionId);
+        setSession(newSessionId);
+      }
     }
   }, [session]);
 
