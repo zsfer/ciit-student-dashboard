@@ -1,3 +1,4 @@
+"use client";
 import { AnnouncementCarousel } from "@/components/announcements/announcement-carousel";
 import { CarehubCTA } from "@/components/carehub/carehub-cta";
 import { ClassSchedule } from "@/components/student/class-schedule";
