@@ -14,17 +14,21 @@ import { cn, isValidCarehubRecord } from "@/lib/utils";
 import { cva } from "class-variance-authority";
 import dayjs from "dayjs";
 import { ShieldAlertIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import React from "react";
 
-const carehubEntryVariants = cva("bg-gray-500 rounded-full px-3 py-2", {
-  variants: {
-    status: {
-      Allowed: "bg-green-300 text-green-800",
-      Denied: "bg-red-300 text-red-800",
-      Pending: "bg-yellow-300 text-yellow-800",
+const carehubEntryVariants = cva(
+  "text-center bg-gray-500 rounded-full px-3 py-2",
+  {
+    variants: {
+      status: {
+        Allowed: "bg-green-300 text-green-800",
+        Denied: "bg-red-300 text-red-800",
+        Pending: "bg-yellow-300 text-yellow-800",
+      },
     },
   },
-});
+);
 
 const CarehubPage = () => {
   const { records } = useCarehubData();
@@ -68,6 +72,7 @@ const CarehubPage = () => {
 
 const HasDoneCarehub = ({ record }: { record: CarehubRecord }) => {
   const isValid = isValidCarehubRecord(record);
+  const router = useRouter();
 
   if (isValid) return <></>;
 
@@ -77,7 +82,11 @@ const HasDoneCarehub = ({ record }: { record: CarehubRecord }) => {
         <ShieldAlertIcon />
         It seems like you haven&apos;t done your Carehub today!
       </div>
-      <OpenCarehub />
+      <OpenCarehub
+        onSubmit={() => {
+          router.refresh();
+        }}
+      />
     </div>
   );
 };

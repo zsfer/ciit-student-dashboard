@@ -1,5 +1,6 @@
 "use client";
-import { useIsMobile } from "@/hooks/use-mobile";
+//import { useIsMobile } from "@/hooks/use-mobile";
+import { isMobile } from "react-device-detect";
 import Airtable from "@/lib/db/airtable-db";
 import { Announcement } from "@/lib/types";
 import { useQuery } from "@tanstack/react-query";
@@ -16,7 +17,6 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 export const AnnouncementCarousel = () => {
-  const isMobile = useIsMobile();
   const [api, setApi] = useState<CarouselApi>(null!);
   const [current, setCurrent] = useState(0);
 
@@ -42,7 +42,7 @@ export const AnnouncementCarousel = () => {
 
   if (isMobile) return <></>;
 
-  if (isLoading && !data) return <AnnouncementSkeleton />;
+  if (isLoading) return <AnnouncementSkeleton />;
 
   return (
     <div className="space-y-2">
@@ -107,7 +107,7 @@ export const AnnouncementCarousel = () => {
 
 const AnnouncementSkeleton = () => {
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 hidden md:block">
       <div className="w-full h-60 rounded-lg bg-gray-200 flex flex-col justify-end py-3 px-3 gap-3">
         <div className="w-[80px] rounded-full bg-gray-300 h-3"></div>
         <div className="w-1/4 rounded-full bg-gray-300 h-6"></div>

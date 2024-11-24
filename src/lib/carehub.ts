@@ -6,7 +6,6 @@ import { CarehubRecord, CarehubResponseForm } from "./types";
 export const saveCarehubOnline = async (
   data: CarehubResponseForm,
   sessionId: string,
-  path: string = "",
 ) => {
   const record: CarehubRecord = {
     "Date Recorded": new Date(),
@@ -19,6 +18,5 @@ export const saveCarehubOnline = async (
 
   const response = await Airtable.pushSingle("Carehub", record);
   revalidatePath("/", "layout");
-  revalidatePath(path);
   return response;
 };

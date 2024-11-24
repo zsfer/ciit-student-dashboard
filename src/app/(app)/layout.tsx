@@ -7,26 +7,22 @@ import {
 } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import { BellIcon } from "lucide-react";
-import { useIsMobile } from "@/hooks/use-mobile";
-import Image from "next/image";
-import CIITLogo from "/public/ciit-logo.png";
-import { MobileNav } from "@/components/sidebar/mobile-nav";
+import { MobileHeader, MobileNav } from "@/components/sidebar/mobile-nav";
 import { cn } from "@/lib/utils";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "@/lib/query";
+import { CarehubDataProvider } from "@/components/carehub/carehub-provider";
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
-  const isMobile = useIsMobile();
-
   return (
     <QueryClientProvider client={queryClient}>
-      <SidebarProvider>
-        <AppSidebar />
-        {!!isMobile ? (
-          <MobileLayout>{children}</MobileLayout>
-        ) : (
+      <CarehubDataProvider>
+        <SidebarProvider>
+          <AppSidebar />
+
           <div className="w-full">
-            <header className="relative items-center border-b px-5 py-3 flex flex-row justify-between">
+            <MobileHeader />
+            <header className="relative items-center border-b px-5 py-3 hidden flex-row justify-between md:flex">
               <ToggleSidebar />
               <div className="flex-1 flex flex-col gap-2">
                 <h1 className="font-bold text-xl">Welcome back, Student! 👋</h1>
@@ -40,30 +36,15 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
                 <div className="bg-blue-300 w-6 h-6 rounded-full"></div>
               </div>
             </header>
-            <main className="px-5 py-3 space-y-3">{children}</main>
+            <main className="px-5 md:py-3 space-y-3 mb-14 md:mb-0">
+              {children}
+            </main>
           </div>
-        )}
-      </SidebarProvider>
+
+          <MobileNav />
+        </SidebarProvider>
+      </CarehubDataProvider>
     </QueryClientProvider>
-  );
-};
-
-const MobileLayout = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <div className="w-full">
-      <main className="px-5 py-8 space-y-2 mb-14 ">
-        <header className="flex flex-row justify-between w-full items-center mb-6">
-          <Image src={CIITLogo} alt="CIIT" className="w-1/3" />
-          <div className="flex flex-row gap-5 items-center">
-            <BellIcon />
-            <SidebarTrigger />
-          </div>
-        </header>
-        {children}
-      </main>
-
-      <MobileNav />
-    </div>
   );
 };
 

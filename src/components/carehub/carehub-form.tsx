@@ -20,10 +20,9 @@ import {
 } from "@/lib/types";
 import { useCarehubData } from "@/hooks/use-carehub";
 import { useSession } from "@/hooks/use-session";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
-export const OpenCarehub = () => {
-  const pathname = usePathname();
+export const OpenCarehub = ({ onSubmit }: { onSubmit?: () => void }) => {
   const router = useRouter();
   const { submitCarehub, refetch } = useCarehubData();
   const { session } = useSession();
@@ -37,11 +36,12 @@ export const OpenCarehub = () => {
   } = useForm<CarehubResponseForm>();
 
   const submitForm: SubmitHandler<CarehubResponseForm> = async (data) => {
-    const { records } = await submitCarehub(data, session, pathname);
+    const { records } = await submitCarehub(data, session);
 
     if (records) {
       setOpen(false);
       router.refresh();
+      if (onSubmit) onSubmit();
       refetch();
     }
   };
