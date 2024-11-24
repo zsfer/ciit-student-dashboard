@@ -11,43 +11,48 @@ export const useCarehubData = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        // Try getting from cache first
-        const localData = (await localDb.carehub.toArray()).reverse();
-        setRecords(localData.map((r) => r.fields));
-
-        // check if online
-        if (navigator.onLine) {
-          const { records: onlineData } = await Airtable.get<CarehubRecord>(
-            "Carehub",
-            {
-              sort: [{ field: "ID", direction: "desc" }],
-              filterByFormula: `{Session} = '${session}'`,
-            },
-          );
-
-          const hasUpdates =
-            onlineData.length !== localData.length ||
-            JSON.stringify(localData) !== JSON.stringify(onlineData);
-
-          if (hasUpdates) {
-            console.log(
-              "[carehub]: local data mismatch, syncing with latest carehub data",
-            );
-
-            localDb.carehub.clear();
-            await localDb.carehub.bulkPut(onlineData);
-
-            setRecords(onlineData.map((r) => r.fields));
-          }
-        }
-      } catch (e) {
-        console.log(e);
-      }
+      await refetch();
     };
 
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session]);
+
+  const refetch = async () => {
+    try {
+      // Try getting from cache first
+      const localData = (await localDb.carehub.toArray()).reverse();
+      setRecords(localData.map((r) => r.fields));
+
+      // check if online
+      if (navigator.onLine) {
+        const { records: onlineData } = await Airtable.get<CarehubRecord>(
+          "Carehub",
+          {
+            sort: [{ field: "ID", direction: "desc" }],
+            filterByFormula: `{Session} = '${session}'`,
+          },
+        );
+
+        const hasUpdates =
+          onlineData.length !== localData.length ||
+          JSON.stringify(localData) !== JSON.stringify(onlineData);
+
+        if (hasUpdates) {
+          console.log(
+            "[carehub]: local data mismatch, syncing with latest carehub data",
+          );
+
+          localDb.carehub.clear();
+          await localDb.carehub.bulkPut(onlineData);
+
+          setRecords(onlineData.map((r) => r.fields));
+        }
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const submitCarehub = async (
     data: CarehubResponseForm,
@@ -88,5 +93,5 @@ export const useCarehubData = () => {
     return { records: [toSave] };
   };
 
-  return { records, submitCarehub };
+  return { records, submitCarehub, refetch };
 };

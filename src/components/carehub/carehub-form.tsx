@@ -25,7 +25,7 @@ import { usePathname, useRouter } from "next/navigation";
 export const OpenCarehub = () => {
   const pathname = usePathname();
   const router = useRouter();
-  const { submitCarehub } = useCarehubData();
+  const { submitCarehub, refetch } = useCarehubData();
   const { session } = useSession();
 
   const [open, setOpen] = useState(false);
@@ -42,6 +42,7 @@ export const OpenCarehub = () => {
     if (records) {
       setOpen(false);
       router.refresh();
+      refetch();
     }
   };
 
