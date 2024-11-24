@@ -43,7 +43,7 @@ export type MentalCheckAppointment = {
   reason: string;
 };
 
-/// ANNOUNCEMENT STUFF
+/// other stuff
 export type Announcement = {
   Name: string;
   Description: string;
@@ -61,6 +61,23 @@ export type Schedule = {
   "Cover Image": ATAttachment[];
 };
 
+export type Post = {
+  "Post ID": number;
+  Created: Date;
+  "Post Content": string;
+  "Poster Name": string[];
+  "Poster Pic": ATAttachment[];
+  Image: ATAttachment[];
+  Likes: string[];
+};
+
+export type Like = {
+  ID: string;
+  Post: string[];
+  Session: string;
+  Created: Date;
+};
+
 /// CORE STUFF
 export type AirtableResponse<T> = {
   records: {
@@ -76,4 +93,15 @@ export type ATAttachment = {
   filename: string;
   size: number;
   type: string;
+  thumbnails?: {
+    small: ATThumbnail;
+    large: ATThumbnail;
+    full: ATThumbnail;
+  };
+};
+
+export type ATThumbnail = {
+  url: string;
+  width: number;
+  height: number;
 };

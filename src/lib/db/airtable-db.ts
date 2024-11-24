@@ -33,7 +33,7 @@ const get = async <T>(
 
 const pushSingle = async <T>(
   storeName: string,
-  data: T,
+  data: Partial<T>,
 ): Promise<AirtableResponse<T>> => {
   try {
     const { data: response } = await airtableApi.post<AirtableResponse<T>>(
@@ -50,11 +50,21 @@ const pushSingle = async <T>(
   }
 };
 
+const destroy = async (storeName: string, records: string) => {
+  console.log(records);
+  const { data: response } = await airtableApi.delete(
+    storeName + `/${records}`,
+  );
+
+  return !!response;
+};
+
 type ATSortObject = { field: string; direction: "asc" | "desc" };
 
 const Airtable = {
   get,
   pushSingle,
+  destroy,
 };
 
 export default Airtable;

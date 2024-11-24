@@ -36,7 +36,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
                 <div className="bg-blue-300 w-6 h-6 rounded-full"></div>
               </div>
             </header>
-            <main className="px-5 md:py-3 space-y-3 mb-14 md:mb-0">
+            <main className="px-5 md:py-3 space-y-3 mb-20 md:mb-0">
               {children}
             </main>
           </div>
