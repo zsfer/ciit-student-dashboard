@@ -42,6 +42,16 @@ export type MentalCheckAppointment = {
   reason: string;
 };
 
+/// ANNOUNCEMENT STUFF
+export type Announcement = {
+  Name: string;
+  Description: string;
+  "Valid Till": Date;
+  "Cover Image": ATAttachment[];
+  "External Link": string;
+  "Is Popup"?: boolean;
+};
+
 /// CORE STUFF
 export type AirtableResponse<T> = {
   records: {
@@ -49,4 +59,12 @@ export type AirtableResponse<T> = {
     createdTime: Date;
     fields: T;
   }[];
+};
+
+export type ATAttachment = {
+  id: string;
+  url: string;
+  filename: string;
+  size: number;
+  type: string;
 };

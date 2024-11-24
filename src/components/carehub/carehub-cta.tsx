@@ -35,7 +35,7 @@ const DidCarehubToday = ({ record }: { record: CarehubRecord }) => {
       <h2>You&apos;re all good to go!</h2>
       <div className="text-sm mb-3">
         Cleared at:{" "}
-        {dayjs(record["Date Recorded"]).format("MMM DD, YYYY, HH:mm a")}
+        {dayjs(record["Date Recorded"]).format("MMM DD, YYYY hh:mm a")}
       </div>
 
       <Link href="/carehub" className="flex-1">

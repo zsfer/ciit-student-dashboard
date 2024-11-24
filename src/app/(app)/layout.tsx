@@ -10,7 +10,6 @@ import { BellIcon, SearchIcon } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import Image from "next/image";
 import CIITLogo from "/public/ciit-logo.png";
-import { SplashScreen } from "@/components/splash-screen";
 import { MobileNav } from "@/components/sidebar/mobile-nav";
 import { cn } from "@/lib/utils";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -18,8 +17,6 @@ import { queryClient } from "@/lib/query";
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const isMobile = useIsMobile();
-
-  if (isMobile === undefined) return <SplashScreen />;
 
   if (!!isMobile) return <MobileLayout>{children}</MobileLayout>;
 
@@ -43,7 +40,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
               <div className="bg-blue-300 w-6 h-6 rounded-full"></div>
             </div>
           </header>
-          <main className="px-5 py-3">{children}</main>
+          <main className="px-5 py-3 space-y-3">{children}</main>
         </div>
       </SidebarProvider>
     </QueryClientProvider>
