@@ -1,10 +1,14 @@
+import { saveCarehubOnline } from "@/lib/carehub";
 import Airtable from "@/lib/db/airtable-db";
 import { localDb } from "@/lib/db/local-db";
-import { CarehubRecord } from "@/lib/types";
+import { CarehubRecord, CarehubResponseForm } from "@/lib/types";
 import { useEffect, useState } from "react";
+import { useSession } from "./use-session";
 
 export const useCarehubData = () => {
+  const { session } = useSession();
   const [records, setRecords] = useState<CarehubRecord[]>(null!);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -18,6 +22,7 @@ export const useCarehubData = () => {
             "Carehub",
             {
               sort: [{ field: "ID", direction: "desc" }],
+              filter: `Session=${session}`,
             },
           );
 
@@ -42,7 +47,46 @@ export const useCarehubData = () => {
     };
 
     fetchData();
-  }, []);
+  }, [session]);
 
-  return { records };
+  const submitCarehub = async (
+    data: CarehubResponseForm,
+    sessionId: string,
+    path: string = "",
+  ) => {
+    try {
+      // save in airtable
+      return saveCarehubOnline(data, sessionId, path);
+    } catch (e) {
+      // no internet, save to idb
+      console.log("[carehub]: failed to submit. saving locally as pending:", e);
+      return saveCarehubOffline(data, sessionId);
+    }
+  };
+
+  const saveCarehubOffline = async (
+    data: CarehubResponseForm,
+    sessionId: string,
+  ) => {
+    const record: CarehubRecord = {
+      "Date Recorded": new Date(),
+      Student: { id: "usrcmxrYMexpsph81" },
+      "Health Check": data.healthCheck,
+      "Mental Health Check": data.mentalHealthCheck,
+      Status: "Pending",
+      Session: sessionId,
+    };
+
+    const toSave = {
+      id: crypto.randomUUID(),
+      fields: record,
+      createdTime: new Date(),
+    };
+
+    await localDb.pending.put(toSave);
+
+    return { records: [toSave] };
+  };
+
+  return { records, submitCarehub };
 };

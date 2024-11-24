@@ -18,9 +18,16 @@ import {
   HealthCheckResponse,
   MentalCheckResponse,
 } from "@/lib/types";
-import { submitCarehub } from "@/lib/carehub";
+import { useCarehubData } from "@/hooks/use-carehub";
+import { useSession } from "@/hooks/use-session";
+import { usePathname, useRouter } from "next/navigation";
 
 export const OpenCarehub = () => {
+  const pathname = usePathname();
+  const router = useRouter();
+  const { submitCarehub } = useCarehubData();
+  const { session } = useSession();
+
   const [open, setOpen] = useState(false);
   const {
     setValue,
@@ -30,9 +37,12 @@ export const OpenCarehub = () => {
   } = useForm<CarehubResponseForm>();
 
   const submitForm: SubmitHandler<CarehubResponseForm> = async (data) => {
-    const { records } = await submitCarehub(data);
+    const { records } = await submitCarehub(data, session, pathname);
 
-    if (records) setOpen(false);
+    if (records) {
+      setOpen(false);
+      router.refresh();
+    }
   };
 
   return (

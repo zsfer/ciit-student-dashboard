@@ -51,8 +51,8 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
 const MobileLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="w-full">
-      <main className="px-5 py-8 space-y-8 mb-14">
-        <header className="flex flex-row justify-between w-full items-center">
+      <main className="px-5 py-8 space-y-2 mb-14 ">
+        <header className="flex flex-row justify-between w-full items-center mb-6">
           <Image src={CIITLogo} alt="CIIT" className="w-1/3" />
           <div className="flex flex-row gap-5 items-center">
             <BellIcon />

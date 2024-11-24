@@ -8,9 +8,16 @@ const airtableApi = axios.create({
   },
 });
 
+type GetParams = {
+  maxRecords: number;
+  view: string;
+  sort: ATSortObject[];
+  filter: string;
+};
+
 const get = async <T>(
   storeName: string,
-  opts?: { maxRecords?: number; view?: string; sort?: ATSortObject[] },
+  opts?: Partial<GetParams>,
 ): Promise<AirtableResponse<T>> => {
   try {
     const { data } = await airtableApi.get<AirtableResponse<T>>(storeName, {

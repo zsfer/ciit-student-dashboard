@@ -10,6 +10,7 @@ export type CarehubRecord = {
   "Additional Info"?: string;
   "Health Check": string;
   "Mental Health Check": string;
+  Session: string;
   Student: User;
 };
 
