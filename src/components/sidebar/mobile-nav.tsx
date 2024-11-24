@@ -4,6 +4,7 @@ import { generalRoutes } from "./routes";
 import { usePathname } from "next/navigation";
 
 import CIITLogo from "/public/ciit-logo.png";
+import DP from "/public/chill.webp";
 import Image from "next/image";
 import { BellIcon } from "lucide-react";
 import { SidebarTrigger } from "../ui/sidebar";
@@ -36,6 +37,10 @@ export const MobileNav = () => {
             <r.icon />
           </a>
         ))}
+
+      <a href="/profile">
+        <Image alt="Me" src={DP} className="rounded-full w-8 h-8" />
+      </a>
     </nav>
   );
 };

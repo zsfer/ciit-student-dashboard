@@ -1,4 +1,9 @@
-import { BookUser, BrainCog, LayoutDashboardIcon } from "lucide-react";
+import {
+  BookUser,
+  BrainCog,
+  DramaIcon,
+  LayoutDashboardIcon,
+} from "lucide-react";
 
 export const generalRoutes = [
   { title: "Dashboard", url: "/", icon: LayoutDashboardIcon, mobile: true },
@@ -8,5 +13,14 @@ export const generalRoutes = [
     url: "/student-corner",
     icon: BookUser,
     mobile: true,
+  },
+];
+
+export const studentServicesRoutes = [
+  {
+    title: "Student Organizations",
+    url: "/student-services/orgs",
+    icon: DramaIcon,
+    mobile: false,
   },
 ];

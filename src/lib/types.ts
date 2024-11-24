@@ -78,6 +78,15 @@ export type Like = {
   Created: Date;
 };
 
+export type Organization = {
+  Name: string;
+  "Short Description": string;
+  "Long Description": string;
+  Email: string;
+  Image: ATAttachment[];
+  Tags: string[];
+};
+
 /// CORE STUFF
 export type AirtableResponse<T> = {
   records: {

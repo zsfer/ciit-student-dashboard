@@ -9,8 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@clerk/nextjs": "^6.4.0",
     "@ducanh2912/next-pwa": "^10.2.9",
+    "@radix-ui/react-collapsible": "^1.1.1",
     "@radix-ui/react-dialog": "^1.1.2",
     "@radix-ui/react-scroll-area": "^1.2.1",
     "@radix-ui/react-separator": "^1.1.0",
@@ -25,7 +25,6 @@
     "dexie": "^4.0.10",
     "dexie-react-hooks": "^1.1.7",
     "embla-carousel-react": "^8.5.1",
-    "jotai": "^2.10.3",
     "lucide-react": "^0.460.0",
     "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",

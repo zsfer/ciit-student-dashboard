@@ -6,12 +6,13 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
-import { BellIcon } from "lucide-react";
 import { MobileHeader, MobileNav } from "@/components/sidebar/mobile-nav";
 import { cn } from "@/lib/utils";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "@/lib/query";
 import { CarehubDataProvider } from "@/components/carehub/carehub-provider";
+import Image from "next/image";
+import DP from "/public/chill.webp";
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -30,10 +31,17 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
               </div>
 
               <div className="flex flex-row gap-5 ">
-                <div className="flex flex-row gap-5 items-center ">
-                  <BellIcon size={20} />
-                </div>
-                <div className="bg-blue-300 w-6 h-6 rounded-full"></div>
+                <div className="flex flex-row gap-5 items-center "></div>
+                <a
+                  href="/profile"
+                  className="rounded-md border p-2 flex flex-row items-center gap-2 hover:bg-gray-50"
+                >
+                  <Image alt="Me" src={DP} className="rounded-full w-8 h-8" />
+                  <div className="flex flex-col text-sm">
+                    Chill Guy
+                    <div className="text-gray-500 text-xs">12-345-6789</div>
+                  </div>
+                </a>
               </div>
             </header>
             <main className="px-5 md:py-3 space-y-3 mb-20 md:mb-0">
