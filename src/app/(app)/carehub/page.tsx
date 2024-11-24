@@ -14,6 +14,7 @@ import React from "react";
 
 const CarehubPage = () => {
   const { records } = useCarehubData();
+
   return (
     <>
       <Table>

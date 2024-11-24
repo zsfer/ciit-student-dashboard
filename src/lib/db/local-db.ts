@@ -1,17 +1,18 @@
-import { DBSchema, openDB } from "idb";
+import Dexie, { EntityTable } from "dexie";
 import { CarehubRecord } from "../types";
 
-export interface LocalDBSchema extends DBSchema {
-  carehub: { value: CarehubRecord; key: number };
-}
-export const localDb = openDB("student-dashboard", 1, {
-  upgrade(db) {
-    if (!db.objectStoreNames.contains("carehub")) {
-      const store = db.createObjectStore("carehub", {
-        keyPath: "id",
-      });
-      store.createIndex("id", "id");
-      store.createIndex("date", "createdTime");
-    }
-  },
+type LocalCarehub = {
+  id: string;
+  createdTime: Date;
+  fields: CarehubRecord;
+};
+
+const localDb = new Dexie("student-dashboard") as Dexie & {
+  carehub: EntityTable<LocalCarehub, "id">;
+};
+
+localDb.version(1).stores({
+  carehub: "id, createdTime, fields",
 });
+
+export { localDb };

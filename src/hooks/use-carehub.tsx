@@ -5,19 +5,12 @@ import { useEffect, useState } from "react";
 
 export const useCarehubData = () => {
   const [records, setRecords] = useState<CarehubRecord[]>(null!);
-  const [localRecords, setLocalRecords] = useState<CarehubRecord[]>(null!);
-  const [onlineRecords, setOnlineRecords] = useState<CarehubRecord[]>(null!);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Try getting from cache first
-        const db = await localDb;
-        const localData = (
-          await db.getAllFromIndex("carehub", "date")
-        ).reverse();
+        const localData = (await localDb.carehub.toArray()).reverse();
         setRecords(localData.map((r) => r.fields));
-        setLocalRecords(localData.map((r) => r.fields));
 
         // check if online
         if (navigator.onLine) {
@@ -37,15 +30,10 @@ export const useCarehubData = () => {
               "[carehub]: local data mismatch, syncing with latest carehub data",
             );
 
-            db.clear("carehub");
-            const tx = db.transaction("carehub", "readwrite");
+            localDb.carehub.clear();
+            await localDb.carehub.bulkPut(onlineData);
 
-            for (const record of onlineData) {
-              await tx.store.put(record);
-            }
-            await tx.done;
             setRecords(onlineData.map((r) => r.fields));
-            setOnlineRecords(onlineData.map((r) => r.fields));
           }
         }
       } catch (e) {
@@ -56,5 +44,5 @@ export const useCarehubData = () => {
     fetchData();
   }, []);
 
-  return { records, localRecords, onlineRecords };
+  return { records };
 };

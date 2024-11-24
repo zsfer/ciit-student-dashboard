@@ -7,7 +7,7 @@ export const ConsultWithDoctor = () => {
         height="100%"
         className="border-none"
         title="Consult with doctor"
-        src="https://student.ciit.edu.ph/doctors-scheduler?viewMode=modal"
+        src=""
       ></iframe>
     </div>
   );
