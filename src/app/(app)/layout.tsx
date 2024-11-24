@@ -6,7 +6,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
-import { BellIcon, SearchIcon } from "lucide-react";
+import { BellIcon } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import Image from "next/image";
 import CIITLogo from "/public/ciit-logo.png";
@@ -35,7 +35,6 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
 
               <div className="flex flex-row gap-5 ">
                 <div className="flex flex-row gap-5 items-center ">
-                  <SearchIcon size={20} />
                   <BellIcon size={20} />
                 </div>
                 <div className="bg-blue-300 w-6 h-6 rounded-full"></div>
@@ -52,12 +51,12 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
 const MobileLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="w-full">
-      <main className="px-5 py-8 space-y-8">
+      <main className="px-5 py-8 space-y-8 mb-14">
         <header className="flex flex-row justify-between w-full items-center">
           <Image src={CIITLogo} alt="CIIT" className="w-1/3" />
           <div className="flex flex-row gap-5 items-center">
-            <SearchIcon />
             <BellIcon />
+            <SidebarTrigger />
           </div>
         </header>
         {children}

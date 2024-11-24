@@ -7,7 +7,7 @@ export const MobileNav = () => {
   const path = usePathname();
 
   return (
-    <nav className="fixed bottom-0 left-0 w-full border-t flex flex-row items-center justify-between gap-5 py-5 px-10">
+    <nav className="bg-white fixed bottom-0 left-0 w-full border-t flex flex-row items-center justify-between gap-5 py-5 px-10">
       {generalRoutes
         .filter((r) => r.mobile)
         .map((r, i) => (
