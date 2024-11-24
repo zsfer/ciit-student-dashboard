@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Red_Hat_Text } from "next/font/google";
 
 import "./globals.css";
@@ -9,9 +9,48 @@ const sans = Red_Hat_Text({
   subsets: ["latin"],
 });
 
+const APP_NAME = "CIITzen";
+const APP_DEFAULT_TITLE = "CIIT Student Dashboard";
+const APP_TITLE_TEMPLATE = "%s - CIITzen";
+const APP_DESCRIPTION = "For CIITzens, by CIITzens!";
+
 export const metadata: Metadata = {
-  title: "CIIT Student Dashboard",
-  description: "For CIITzens, by CIITzens!",
+  applicationName: APP_NAME,
+  title: {
+    default: APP_DEFAULT_TITLE,
+    template: APP_TITLE_TEMPLATE,
+  },
+  description: APP_DESCRIPTION,
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: APP_NAME,
+  },
+  formatDetection: {
+    telephone: true,
+  },
+  openGraph: {
+    type: "website",
+    siteName: APP_NAME,
+    title: {
+      default: APP_DEFAULT_TITLE,
+      template: APP_TITLE_TEMPLATE,
+    },
+    description: APP_DESCRIPTION,
+  },
+  twitter: {
+    card: "summary",
+    title: {
+      default: APP_DEFAULT_TITLE,
+      template: APP_TITLE_TEMPLATE,
+    },
+    description: APP_DESCRIPTION,
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#FFFFFF",
 };
 
 export default function RootLayout({
