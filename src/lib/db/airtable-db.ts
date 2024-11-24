@@ -12,7 +12,7 @@ type GetParams = {
   maxRecords: number;
   view: string;
   sort: ATSortObject[];
-  filter: string;
+  filterByFormula: string;
 };
 
 const get = async <T>(

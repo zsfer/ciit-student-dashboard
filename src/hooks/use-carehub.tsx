@@ -22,7 +22,7 @@ export const useCarehubData = () => {
             "Carehub",
             {
               sort: [{ field: "ID", direction: "desc" }],
-              filter: `Session=${session}`,
+              filterByFormula: `{Session} = '${session}'`,
             },
           );
 
