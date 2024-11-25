@@ -58,13 +58,15 @@ const StudentCornerPage = () => {
               className="border rounded-lg p-5 max-w-xl space-y-3"
             >
               <div className="flex flex-row items-center gap-3">
-                <Image
-                  src={r.fields["Poster Pic"][0].thumbnails!.small.url}
-                  width={36}
-                  height={36}
-                  alt={r.fields["Poster Name"][0]}
-                  className="rounded-md object-cover w-[36px] h-[36px]"
-                />
+                {r.fields["Poster Pic"] && (
+                  <Image
+                    src={r.fields["Poster Pic"][0].thumbnails!.small.url}
+                    width={36}
+                    height={36}
+                    alt={r.fields["Poster Name"][0]}
+                    className="rounded-md object-cover w-[36px] h-[36px]"
+                  />
+                )}
                 <div className="flex flex-col">
                   {r.fields["Poster Name"]}
                   <div className="text-gray-400 text-xs">
