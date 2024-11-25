@@ -82,6 +82,9 @@ const StudentCornerPage = () => {
                   alt={"post image"}
                   width={512}
                   height={512}
+                  placeholder="blur"
+                  blurDataURL={`data:image/png;base64,         iVBORw0KGgoAAAANSUhEUgAAAZMAAADPCAIAAAC.....`}
+                  loading={"lazy"}
                   className="max-w-lg w-full rounded-lg"
                 />
               )}
