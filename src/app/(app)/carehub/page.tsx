@@ -15,7 +15,7 @@ import { cva } from "class-variance-authority";
 import dayjs from "dayjs";
 import { ShieldAlertIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
 
 const carehubEntryVariants = cva(
   "text-center bg-gray-500 rounded-full px-3 py-2",
@@ -31,7 +31,16 @@ const carehubEntryVariants = cva(
 );
 
 const CarehubPage = () => {
-  const { records } = useCarehubData();
+  const { records, refetch } = useCarehubData();
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refetch();
+    }, 1000 * 60);
+
+    return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -43,7 +52,7 @@ const CarehubPage = () => {
             <TableHead className="w-1/3">Date</TableHead>
             <TableHead className="w-40">Entry</TableHead>
             <TableHead>Health Check</TableHead>
-            <TableHead>Health Check</TableHead>
+            <TableHead>Mental Check</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
